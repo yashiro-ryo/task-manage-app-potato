@@ -1,0 +1,27 @@
+name: Build Test
+on:
+  [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      
+      - name: move directory
+        run: cd client
+
+      - name: setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
+
+      - name: yarn-install
+        run: yarn
+        
+      - name: yarn build
+        run: yarn build
+        
+      - name: yarn start
+        run: yarn start
