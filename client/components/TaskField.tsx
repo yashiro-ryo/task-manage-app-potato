@@ -19,22 +19,24 @@ const Field = styled.div`
 
 export default function TaskField() {
   const [isCatEditorVisible, setCatEditorVisible] = useState(false);
+  const [isTaskEditorVisible, setTaskEditorVisible] = useState(false);
   const onClickAddCategory = (e: any) => {
     setCatEditorVisible(true);
   };
   return (
     <>
       <Field>
-        <CardComp />
-        <CardComp />
-        <CardComp />
-        <CardComp />
-        <CardComp />
-        <CardComp />
+        <CardComp setTaskEditorVisible={setTaskEditorVisible} />
+        <CardComp setTaskEditorVisible={setTaskEditorVisible} />
+        <CardComp setTaskEditorVisible={setTaskEditorVisible} />
         <CategoryAddButton cb={onClickAddCategory} />
         <CategoryEditor
           isVisible={isCatEditorVisible}
           setVisible={setCatEditorVisible}
+        />
+        <TaskEditor
+          isVisible={isTaskEditorVisible}
+          setVisible={setTaskEditorVisible}
         />
       </Field>
     </>

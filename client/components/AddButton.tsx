@@ -2,6 +2,10 @@ import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 
+type Props = {
+  setTaskEditorVisible: (isVisible: boolean) => void;
+};
+
 const StyledButton = styled(Button)`
   background-color: #ffffff;
   color: #636363;
@@ -9,13 +13,16 @@ const StyledButton = styled(Button)`
   width: 45px;
 `;
 
-export default function AddButton() {
+export default function AddButton(props: Props) {
+  const onClickTaskAddButton = (e: any) => {
+    props.setTaskEditorVisible(true);
+  };
   return (
     <OverlayTrigger
       placement={"bottom"}
       overlay={<Tooltip id={`tooltip-bottom`}>タスク追加</Tooltip>}
     >
-      <StyledButton variant="light">
+      <StyledButton variant="light" onClick={onClickTaskAddButton}>
         <AiOutlinePlus />
       </StyledButton>
     </OverlayTrigger>

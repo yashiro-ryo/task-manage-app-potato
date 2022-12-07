@@ -8,10 +8,6 @@ type Props = {
 };
 
 export default function TaskEditor(props: Props) {
-  const handleShow = () => {
-    props.setVisible(true);
-  };
-
   const handleClose = () => {
     props.setVisible(false);
   };
