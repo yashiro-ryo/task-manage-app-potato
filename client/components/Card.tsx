@@ -8,6 +8,7 @@ const StyledCard = styled(Card)`
   width: 300px;
   padding: 10px;
   margin-right: 15px;
+  margin-bottom: 15px;
 `;
 
 const StyledCardHeader = styled.div`

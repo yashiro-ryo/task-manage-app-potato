@@ -1,5 +1,9 @@
+import { useState } from "react";
 import styled from "styled-components";
 import CardComp from "./Card";
+import CategoryAddButton from "./CategoryAddButton";
+import CategoryEditor from "./CategoryEditor";
+import TaskEditor from "./TaskEditor";
 
 const Field = styled.div`
   width: 100%;
@@ -14,6 +18,10 @@ const Field = styled.div`
 `;
 
 export default function TaskField() {
+  const [isCatEditorVisible, setCatEditorVisible] = useState(false);
+  const onClickAddCategory = (e: any) => {
+    setCatEditorVisible(true);
+  };
   return (
     <>
       <Field>
@@ -23,6 +31,11 @@ export default function TaskField() {
         <CardComp />
         <CardComp />
         <CardComp />
+        <CategoryAddButton cb={onClickAddCategory} />
+        <CategoryEditor
+          isVisible={isCatEditorVisible}
+          setVisible={setCatEditorVisible}
+        />
       </Field>
     </>
   );
