@@ -1,7 +1,17 @@
+import React from "react";
 import { Card } from "react-bootstrap";
 import styled from "styled-components";
+import { TaskType } from "../values/task";
 import DeleteButton from "./DeleteButton";
 import OptionButton from "./OptionButton";
+
+type Props = {
+  onDrag: (e: React.MouseEvent) => void;
+  onDragOver: (e: React.MouseEvent) => void;
+  onDragEnter: (e: React.MouseEvent) => void;
+  onDragLeave: (e: React.MouseEvent) => void;
+  task: TaskType;
+};
 
 const StyledCard = styled(Card)`
   padding: 10px;
@@ -19,10 +29,17 @@ const ButtonGroup = styled.div`
   justify-content: end;
 `;
 
-export default function Task() {
+export default function Task(props: Props) {
   return (
-    <StyledCard>
-      <TaskText>タスク1</TaskText>
+    <StyledCard
+      draggable={true}
+      onDrag={props.onDrag}
+      onDragOver={props.onDragOver}
+      onDragEnter={props.onDragEnter}
+      onDragLeave={props.onDragLeave}
+      data-task-id={props.task.taskId}
+    >
+      <TaskText>{props.task.taskText}</TaskText>
       <ButtonGroup>
         <DeleteButton />
         <OptionButton />

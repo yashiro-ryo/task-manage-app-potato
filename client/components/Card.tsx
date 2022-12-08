@@ -3,9 +3,16 @@ import styled from "styled-components";
 import CardOption from "./CardOption";
 import Task from "./Task";
 import AddButton from "./AddButton";
+import React from "react";
+import { Group, TaskType } from "../values/task";
 
 type Props = {
   setTaskEditorVisible: (isVisible: boolean) => void;
+  onDrag: (e: React.MouseEvent) => void;
+  onDragOver: (e: React.MouseEvent) => void;
+  onDragEnter: (e: React.MouseEvent) => void;
+  onDragLeave: (e: React.MouseEvent) => void;
+  taskGroup: Group;
 };
 
 const StyledCard = styled(Card)`
@@ -27,12 +34,21 @@ export default function CardComp(props: Props) {
   return (
     <StyledCard>
       <StyledCardHeader>
-        <CardTitle>カードタイトル</CardTitle>
+        <CardTitle>{props.taskGroup.taskGroupText}</CardTitle>
         <CardOption />
       </StyledCardHeader>
-      <Task />
-      <Task />
-      <Task />
+      {props.taskGroup.tasks.map((value: TaskType) => {
+        return (
+          <Task
+            onDrag={props.onDrag}
+            onDragOver={props.onDragOver}
+            onDragEnter={props.onDragEnter}
+            onDragLeave={props.onDragLeave}
+            key={value.taskId}
+            task={value}
+          />
+        );
+      })}
       <AddButton setTaskEditorVisible={props.setTaskEditorVisible} />
     </StyledCard>
   );

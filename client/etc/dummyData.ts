@@ -1,4 +1,4 @@
-export const tasks = [
+export const groups = [
   {
     taskGroupId: 1,
     taskGroupText: "task",
