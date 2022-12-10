@@ -7,9 +7,8 @@ import OptionButton from "./OptionButton";
 
 type Props = {
   onDrag: (e: React.MouseEvent) => void;
-  onDragOver: (e: React.MouseEvent) => void;
-  onDragEnter: (e: React.MouseEvent) => void;
-  onDragLeave: (e: React.MouseEvent) => void;
+  onDragStart: (e: React.MouseEvent) => void;
+  taskGroupId: number
   task: TaskType;
 };
 
@@ -34,10 +33,9 @@ export default function Task(props: Props) {
     <StyledCard
       draggable={true}
       onDrag={props.onDrag}
-      onDragOver={props.onDragOver}
-      onDragEnter={props.onDragEnter}
-      onDragLeave={props.onDragLeave}
+      onDragStart={props.onDragStart}
       data-task-id={props.task.taskId}
+      data-task-group-id={props.taskGroupId}
     >
       <TaskText>{props.task.taskText}</TaskText>
       <ButtonGroup>

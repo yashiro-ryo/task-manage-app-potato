@@ -10,8 +10,8 @@ type Props = {
   setTaskEditorVisible: (isVisible: boolean) => void;
   onDrag: (e: React.MouseEvent) => void;
   onDragOver: (e: React.MouseEvent) => void;
-  onDragEnter: (e: React.MouseEvent) => void;
-  onDragLeave: (e: React.MouseEvent) => void;
+  onDragStart: (e: React.MouseEvent) => void;
+  onDrop: (e: React.MouseEvent) => void;
   taskGroup: Group;
 };
 
@@ -32,7 +32,11 @@ const CardTitle = styled.h5`
 
 export default function CardComp(props: Props) {
   return (
-    <StyledCard>
+    <StyledCard
+      onDragOver={props.onDragOver}
+      onDrop={props.onDrop}
+      data-task-group-id={props.taskGroup.taskGroupId}
+    >
       <StyledCardHeader>
         <CardTitle>{props.taskGroup.taskGroupText}</CardTitle>
         <CardOption />
@@ -41,10 +45,9 @@ export default function CardComp(props: Props) {
         return (
           <Task
             onDrag={props.onDrag}
-            onDragOver={props.onDragOver}
-            onDragEnter={props.onDragEnter}
-            onDragLeave={props.onDragLeave}
+            onDragStart={props.onDragStart}
             key={value.taskId}
+            taskGroupId={props.taskGroup.taskGroupId}
             task={value}
           />
         );
