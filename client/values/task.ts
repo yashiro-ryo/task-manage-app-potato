@@ -8,6 +8,6 @@ export type Group = {
 export type TaskType = {
   taskId: number;
   taskText: string;
-  teskCreatedAt: string;
+  taskCreatedAt: string;
   priority: string;
 };

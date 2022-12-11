@@ -5,6 +5,7 @@ import Task from "./Task";
 import AddButton from "./AddButton";
 import React from "react";
 import { Group, TaskType } from "../values/task";
+import DropZone from "./DropZone";
 
 type Props = {
   setTaskEditorVisible: (isVisible: boolean) => void;
@@ -34,22 +35,33 @@ export default function CardComp(props: Props) {
   return (
     <StyledCard
       onDragOver={props.onDragOver}
-      onDrop={props.onDrop}
       data-task-group-id={props.taskGroup.taskGroupId}
     >
       <StyledCardHeader>
         <CardTitle>{props.taskGroup.taskGroupText}</CardTitle>
         <CardOption />
       </StyledCardHeader>
-      {props.taskGroup.tasks.map((value: TaskType) => {
+      <DropZone
+        taskGroupId={props.taskGroup.taskGroupId}
+        dropZoneId={0}
+        onDrop={props.onDrop}
+      />
+      {props.taskGroup.tasks.map((value: TaskType, index: number) => {
         return (
-          <Task
-            onDrag={props.onDrag}
-            onDragStart={props.onDragStart}
-            key={value.taskId}
-            taskGroupId={props.taskGroup.taskGroupId}
-            task={value}
-          />
+          <div key={`${value.taskId}-task-wrapper`}>
+            <Task
+              onDrag={props.onDrag}
+              onDragStart={props.onDragStart}
+              key={value.taskId}
+              taskGroupId={props.taskGroup.taskGroupId}
+              task={value}
+            />
+            <DropZone
+              taskGroupId={props.taskGroup.taskGroupId}
+              dropZoneId={index + 1}
+              onDrop={props.onDrop}
+            />
+          </div>
         );
       })}
       <AddButton setTaskEditorVisible={props.setTaskEditorVisible} />
