@@ -78,55 +78,55 @@ export default function TaskField() {
     moveTask(Number(taskGroupId), Number(dropZoneId));
   };
 
-  const moveTask = (taskGroupId: number, dropZoneId: number) => {
-    let copyTaskGroups = taskGroup;
-    let targetTask: TaskType = {
-      taskId: 0,
-      taskText: "",
-      taskCreatedAt: "",
-      priority: "",
-    };
-    let deleteTargetIndex = {
-      groupIndex: -1,
-      taskIndex: -1,
-    };
-    // task情報の取得
-    copyTaskGroups.forEach((group: Group, groupIndex: number) => {
-      group.tasks.forEach((task: TaskType, taskIndex: number) => {
-        if (task.taskId === dragTarget?.taskId) {
-          targetTask = {
-            taskId: task.taskId,
-            taskText: task.taskText,
-            taskCreatedAt: task.taskCreatedAt,
-            priority: task.priority,
-          };
-          deleteTargetIndex = {
-            groupIndex: groupIndex,
-            taskIndex: taskIndex,
-          };
-        }
-      });
+  const moveTask = (droppedTaskGroupId: number, dropZoneId: number) => {
+    // drag target undefined チェック
+    if (dragTarget === undefined) {
+      return;
+    }
+    let moveTargetTask: TaskType | null = null;
+    let copiedTaskGroups = taskGroup;
+    // dragする要素をtask配列から除去する
+    copiedTaskGroups = copiedTaskGroups.map((group: Group) => {
+      return {
+        taskGroupId: group.taskGroupId,
+        taskGroupText: group.taskGroupText,
+        tasks: group.tasks.filter((task: TaskType) => {
+          if (dragTarget.taskId === task.taskId) {
+            moveTargetTask = {
+              taskId: task.taskId,
+              taskText: task.taskText,
+              taskCreatedAt: task.taskCreatedAt,
+              priority: task.priority,
+            };
+          }
+          return dragTarget.taskId !== task.taskId;
+        }),
+      };
     });
-    // 要素から消す
-    copyTaskGroups[deleteTargetIndex.groupIndex].tasks.splice(
-      deleteTargetIndex.taskIndex,
-      1
-    );
-    console.log(targetTask);
-    // drop先の配列に追加
-    // groupを検索
-    copyTaskGroups.forEach((group: Group) => {
-      if (group.taskGroupId === taskGroupId) {
-        // 配列の一番最後に追加する
-        if (dropZoneId === group.tasks.length) {
-          group.tasks.push(targetTask);
+    // drop先のtasksにタスクを入れてやる
+    copiedTaskGroups = copiedTaskGroups.map((group: Group) => {
+      let copiedTasks = group.tasks;
+      if (group.taskGroupId === droppedTaskGroupId) {
+        if (dropZoneId === 0) {
+          copiedTasks = [moveTargetTask].concat(copiedTasks);
+        } else if (dropZoneId === copiedTasks.length) {
+          copiedTasks = copiedTasks.concat([moveTargetTask]);
         } else {
-          group.tasks.splice(dropZoneId, 0, targetTask);
+          let start = copiedTasks.slice(0, dropZoneId);
+          console.log("start", start);
+          let end = copiedTasks.slice(dropZoneId);
+          console.log("end", end);
+          start = start.concat([moveTargetTask]);
+          copiedTasks = start.concat(end);
         }
       }
+      return {
+        taskGroupId: group.taskGroupId,
+        taskGroupText: group.taskGroupText,
+        tasks: copiedTasks,
+      };
     });
-    setTaskGroup(copyTaskGroups);
-    console.log(taskGroup);
+    setTaskGroup(copiedTaskGroups);
   };
 
   return (
