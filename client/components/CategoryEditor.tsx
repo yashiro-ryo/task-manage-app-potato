@@ -19,7 +19,9 @@ export default function CategoryEditor(props: Props) {
       <StyledModal.Header closeButton>
         <StyledModal.Title>カテゴリー編集</StyledModal.Title>
       </StyledModal.Header>
-      <StyledModal.Body>Woohoo, you're reading this text in a StyledModal!</StyledModal.Body>
+      <StyledModal.Body>
+        Woohoo, youre reading this text in a StyledModal!
+      </StyledModal.Body>
       <StyledModal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Close

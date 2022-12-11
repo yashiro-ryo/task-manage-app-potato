@@ -39,7 +39,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link
-            href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"
+            href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=optional"
             rel="stylesheet"
           />
         </Head>
