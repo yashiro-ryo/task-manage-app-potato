@@ -8,14 +8,14 @@ type Props = {
   setVisible: (isVisible: boolean) => void;
 };
 
+const StyledModal = styled(Modal)`
+  color: #636363;
+`;
+
 export default function TaskEditor(props: Props) {
   const handleClose = () => {
     props.setVisible(false);
   };
-
-  const StyledModal = styled(Modal)`
-    color: #636363;
-  `;
 
   const options = [
     {
