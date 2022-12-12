@@ -1,12 +1,12 @@
-import { Form } from "react-bootstrap";
+import { Form } from 'react-bootstrap'
 
 type Props = {
-  formLabel: string;
-  formType: "text" | "email" | "password" | "textarea";
-  placeHolder: string;
-  value?: any;
-  onChange?: (e: any) => void;
-};
+  formLabel: string
+  formType: 'text' | 'email' | 'password' | 'textarea'
+  placeHolder: string
+  value?: any
+  onChange?: (e: any) => void
+}
 
 export default function InputForm(props: Props) {
   return (
@@ -14,5 +14,5 @@ export default function InputForm(props: Props) {
       <Form.Label>{props.formLabel}</Form.Label>
       <Form.Control type={props.formType} placeholder={props.placeHolder} />
     </>
-  );
+  )
 }

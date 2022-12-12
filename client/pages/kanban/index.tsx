@@ -1,6 +1,6 @@
-import Navbar from "../../components/Navbar";
-import TaskEditor from "../../components/TaskEditor";
-import TaskField from "../../components/TaskField";
+import Navbar from '../../components/Navbar'
+import TaskEditor from '../../components/TaskEditor'
+import TaskField from '../../components/TaskField'
 
 export default function KanbanIndex() {
   return (
@@ -8,5 +8,5 @@ export default function KanbanIndex() {
       <Navbar />
       <TaskField />
     </>
-  );
+  )
 }

@@ -1,14 +1,14 @@
-import { Form } from "react-bootstrap";
+import { Form } from 'react-bootstrap'
 
 type Props = {
-  formLabel: string;
-  options: Array<Option>;
-};
+  formLabel: string
+  options: Array<Option>
+}
 
 type Option = {
-  value: number | string;
-  label: string;
-};
+  value: number | string
+  label: string
+}
 
 export default function InputOptions(props: Props) {
   return (
@@ -20,9 +20,9 @@ export default function InputOptions(props: Props) {
             <option value={option.value} key={index}>
               {option.label}
             </option>
-          );
+          )
         })}
       </Form.Select>
     </>
-  );
+  )
 }

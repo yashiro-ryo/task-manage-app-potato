@@ -1,13 +1,13 @@
 export type Group = {
-  taskGroupId: number;
-  taskGroupText: string;
+  taskGroupId: number
+  taskGroupText: string
   // anyは滅ぼす
-  tasks: any;
-};
+  tasks: any
+}
 
 export type TaskType = {
-  taskId: number;
-  taskText: string;
-  taskCreatedAt: string;
-  priority: string;
-};
+  taskId: number
+  taskText: string
+  taskCreatedAt: string
+  priority: string
+}

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import styled, { css } from "styled-components";
+import React, { useState } from 'react'
+import styled, { css } from 'styled-components'
 
 type Props = {
-  onDrop: (e: React.MouseEvent) => void;
-  dropZoneId: number;
-  taskGroupId: number;
-};
+  onDrop: (e: React.MouseEvent) => void
+  dropZoneId: number
+  taskGroupId: number
+}
 
 const StyledDropZone = styled.div<{ isDragOver: boolean }>`
   width: 100%;
@@ -21,16 +21,16 @@ const StyledDropZone = styled.div<{ isDragOver: boolean }>`
           margin: 5px 0;
           background-color: #e6e6e6;
         `
-      : ""}
-`;
+      : ''}
+`
 
 export default function DropZone(props: Props) {
-  const [isDragOver, setDragOver] = useState<boolean>(false);
+  const [isDragOver, setDragOver] = useState<boolean>(false)
   return (
     <StyledDropZone
       onDrop={(e: React.MouseEvent) => {
-        props.onDrop(e);
-        setDragOver(false);
+        props.onDrop(e)
+        setDragOver(false)
       }}
       onDragEnter={() => setDragOver(true)}
       onDragLeave={() => setDragOver(false)}
@@ -38,5 +38,5 @@ export default function DropZone(props: Props) {
       data-drop-zone-id={props.dropZoneId}
       data-task-group-id={props.taskGroupId}
     />
-  );
+  )
 }

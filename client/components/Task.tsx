@@ -1,32 +1,32 @@
-import React from "react";
-import { Card } from "react-bootstrap";
-import styled from "styled-components";
-import { TaskType } from "../values/task";
-import DeleteButton from "./DeleteButton";
-import OptionButton from "./OptionButton";
+import React from 'react'
+import { Card } from 'react-bootstrap'
+import styled from 'styled-components'
+import { TaskType } from '../values/task'
+import DeleteButton from './DeleteButton'
+import OptionButton from './OptionButton'
 
 type Props = {
-  onDrag: (e: React.MouseEvent) => void;
-  onDragStart: (e: React.MouseEvent) => void;
+  onDrag: (e: React.MouseEvent) => void
+  onDragStart: (e: React.MouseEvent) => void
   taskGroupId: number
-  task: TaskType;
-};
+  task: TaskType
+}
 
 const StyledCard = styled(Card)`
   padding: 10px;
   display: flex;
   justify-content: space-between;
-`;
+`
 
 const TaskText = styled.div`
   display: flex;
   justify-content: start;
-`;
+`
 
 const ButtonGroup = styled.div`
   display: flex;
   justify-content: end;
-`;
+`
 
 export default function Task(props: Props) {
   return (
@@ -43,5 +43,5 @@ export default function Task(props: Props) {
         <OptionButton />
       </ButtonGroup>
     </StyledCard>
-  );
+  )
 }
