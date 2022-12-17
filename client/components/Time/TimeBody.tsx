@@ -22,15 +22,21 @@ const StyledForm = styled(Form)`
   }
 `
 
-export default function TimeBody() {
+type Props = {
+  onChangeTime: (hour: number, min: number) => void
+}
+
+export default function TimeBody(props: Props) {
   const [hour, setHour] = useState(0)
   const [min, setMin] = useState(0)
   const [time, setTime] = useState(`${hour}:${min}`)
-  const onChangeTime = (e: any) => {
+  const onChangeTime = () => {
     displayTime()
+    props.onChangeTime(hour, min)
   }
 
   const getNextHour = () => {
+    onChangeTime()
     if (hour === 23) {
       setHour(0)
     } else {
@@ -39,6 +45,7 @@ export default function TimeBody() {
   }
 
   const getPrevHour = () => {
+    onChangeTime()
     if (hour === 0) {
       setHour(23)
     } else {
@@ -47,6 +54,7 @@ export default function TimeBody() {
   }
 
   const getNextMin = () => {
+    onChangeTime()
     if (min === 59) {
       setMin(0)
     } else {
@@ -55,6 +63,7 @@ export default function TimeBody() {
   }
 
   const getPrevMin = () => {
+    onChangeTime()
     if (min === 0) {
       setMin(59)
     } else {
@@ -63,6 +72,7 @@ export default function TimeBody() {
   }
 
   const resetTime = () => {
+    onChangeTime()
     setHour(0)
     setMin(0)
     displayTime()
@@ -95,7 +105,7 @@ export default function TimeBody() {
         <NextButton cb={getNextMin} />
       </Header>
       <div onClick={() => resetTime()}>
-        <StyledForm.Control type='text' value={time} onChange={onChangeTime} />
+        <StyledForm.Control type='text' value={time} onChange={(e: any) => onChangeTime()} />
       </div>
       <Footer>
         <PrevButton cb={getPrevHour} />

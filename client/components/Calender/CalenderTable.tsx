@@ -6,6 +6,8 @@ const weeks = ['日', '月', '火', '水', '木', '金', '土']
 type Props = {
   yaer: number
   month: number
+  onChangeDate: (year: number, month: number, day: number) => void
+  onClickClose: () => void
 }
 
 const StyledButton = styled.button`
@@ -55,6 +57,8 @@ export default function CalenderTable(props: Props) {
       return
     }
     console.log(props.yaer, '年', props.month, '月', day, '日')
+    props.onChangeDate(props.yaer, props.month, Number(day))
+    props.onClickClose()
   }
 
   useEffect(() => {

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Popover, OverlayTrigger, Button, Form } from 'react-bootstrap'
+import React, { useEffect, useState, useRef } from 'react'
+import { Popover, Overlay, Form } from 'react-bootstrap'
 import styled from 'styled-components'
 import CalenderTable from './CalenderTable'
 import NextMonthButton from './NextMonthButton'
@@ -13,9 +13,26 @@ const CalenderHeader = styled.div`
   justify-content: space-between;
 `
 
-export default function Calender() {
+type Props = {
+  onChangeDate: (year: number, month: number, day: number) => void
+}
+
+export default function Calender(props: Props) {
   const [year, setYear] = useState<number>(0)
   const [month, setMonth] = useState<number>(0)
+  // popover用
+  const [show, setShow] = useState(false)
+  const [target, setTarget] = useState(null)
+
+  const handleShow = (e: any) => {
+    setShow(!show)
+    setTarget(e.target)
+  }
+
+  const handleClose = () => {
+    setShow(false)
+    setTarget(null)
+  }
 
   const initCalender = () => {
     const todayDate = new Date()
@@ -51,23 +68,26 @@ export default function Calender() {
       initCalenderPrepared = true
     }
   }, [])
-  const popover = (
-    <StyledPopover id='popover-basic'>
-      <StyledPopover.Body>
-        <CalenderHeader>
-          <PrevMonthButton setPrevMonth={setPrevMonth} />
-          <YearMonthPart year={year} month={month} />
-          <NextMonthButton setNextMonth={setNextMonth} />
-        </CalenderHeader>
-        <CalenderTable yaer={year} month={month} />
-      </StyledPopover.Body>
-    </StyledPopover>
-  )
   return (
     <>
-      <OverlayTrigger trigger='click' placement='bottom' overlay={popover}>
-        <Form.Control type='date' />
-      </OverlayTrigger>
+      <Form.Control type='date' onClick={handleShow} />
+      <Overlay show={show} target={target} placement='bottom'>
+        <StyledPopover id='popover-basic'>
+          <StyledPopover.Body>
+            <CalenderHeader>
+              <PrevMonthButton setPrevMonth={setPrevMonth} />
+              <YearMonthPart year={year} month={month} />
+              <NextMonthButton setNextMonth={setNextMonth} />
+            </CalenderHeader>
+            <CalenderTable
+              yaer={year}
+              month={month}
+              onChangeDate={props.onChangeDate}
+              onClickClose={handleClose}
+            />
+          </StyledPopover.Body>
+        </StyledPopover>
+      </Overlay>
     </>
   )
 }

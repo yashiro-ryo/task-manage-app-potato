@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap'
 type Props = {
   formLabel: string
   options: Array<Option>
+  onChange: (e: any) => void
 }
 
 type Option = {
@@ -14,7 +15,7 @@ export default function InputOptions(props: Props) {
   return (
     <>
       <Form.Label>{props.formLabel}</Form.Label>
-      <Form.Select>
+      <Form.Select onChange={props.onChange}>
         {props.options.map((option: Option, index: number) => {
           return (
             <option value={option.value} key={index}>

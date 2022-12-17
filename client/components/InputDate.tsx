@@ -1,13 +1,15 @@
-import styled from 'styled-components'
 import { Form } from 'react-bootstrap'
+import Calender from './Calender/Calender'
 
-const today = new Date()
+type Props = {
+  onChangeDate: (year: number, month: number, day: number) => void
+}
 
-export default function InputDate() {
+export default function InputDate(props: Props) {
   return (
     <>
       <Form.Label>日付を選択</Form.Label>
-      <Form.Control type='date' placeholder={String(today.getDate)}></Form.Control>
+      <Calender onChangeDate={props.onChangeDate} />
     </>
   )
 }
