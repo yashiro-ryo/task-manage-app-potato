@@ -1,5 +1,6 @@
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, Form } from 'react-bootstrap'
 import styled from 'styled-components'
+import InputDate from './InputDate'
 import InputForm from './InputForm'
 import InputOptions from './InputOptions'
 
@@ -40,6 +41,7 @@ export default function TaskEditor(props: Props) {
       <StyledModal.Body>
         <InputForm formLabel='タスク名' formType='text' placeHolder='例: ご飯作る' />
         <InputOptions formLabel='優先度' options={options} />
+        <InputDate />
       </StyledModal.Body>
       <StyledModal.Footer>
         <Button variant='secondary' onClick={handleClose}>
