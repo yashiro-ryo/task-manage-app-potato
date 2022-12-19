@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import styled from 'styled-components'
+import ErrorText from './ErrorText'
 import InputDate from './InputDate'
 import InputForm from './InputForm'
 import InputOptions from './InputOptions'
@@ -49,6 +50,10 @@ export default function TaskEditor(props: Props) {
     hour: 3,
     min: 12,
   })
+  const [isTaskValidationErrorVisible, setTaskValidationErrorVisible] = useState(false)
+  const [taskValidationErrorText, setTaskValidationErrorText] = useState('')
+  const [isDeadlineValidationErrorVisible, setDeadlineValidationErrorVisible] = useState(false)
+  const [deadlineValidationErrorText, setDeadlineValidationErrorText] = useState('')
   const handleClose = () => {
     props.setVisible(false)
   }
@@ -72,6 +77,84 @@ export default function TaskEditor(props: Props) {
     setDeadlineTime({ hour: hour, min: min })
   }
 
+  const validate = () => {
+    let isNotAbleToSubmit = false
+    if (taskName.length > 50 || taskName.length < 1) {
+      setTaskValidationErrorVisible(true)
+      setTaskValidationErrorText('タスクは1文字以上５０文字以下にしてください。')
+      isNotAbleToSubmit = true
+    }
+
+    if (dateValidate(deadlineDate, deadlineTime)) {
+      setDeadlineValidationErrorVisible(true)
+      setDeadlineValidationErrorText('過去の日時を指定することはできません。')
+      isNotAbleToSubmit = true
+    }
+    return isNotAbleToSubmit
+  }
+
+  const dateValidate = (
+    date: { year: number; month: number; day: number },
+    time: { hour: number; min: number },
+  ): boolean => {
+    const nowDate = new Date()
+    if (date.year < nowDate.getFullYear()) {
+      return true
+    }
+
+    if (date.year === nowDate.getFullYear() && date.month < nowDate.getMonth() + 1) {
+      return true
+    }
+
+    if (
+      date.year === nowDate.getFullYear() &&
+      date.month === nowDate.getMonth() + 1 &&
+      date.day < nowDate.getDate()
+    ) {
+      return true
+    }
+
+    if (
+      date.year === nowDate.getFullYear() &&
+      date.month === nowDate.getMonth() + 1 &&
+      date.day === nowDate.getDate() &&
+      time.hour < nowDate.getHours()
+    ) {
+      return true
+    }
+
+    if (
+      date.year === nowDate.getFullYear() &&
+      date.month === nowDate.getMonth() + 1 &&
+      date.day === nowDate.getDate() &&
+      time.hour === nowDate.getHours() &&
+      time.min < nowDate.getMinutes()
+    ) {
+      return true
+    }
+    return false
+  }
+
+  const resetErrorText = () => {
+    setTaskValidationErrorVisible(false)
+    setTaskValidationErrorText('')
+    setDeadlineValidationErrorVisible(false)
+    setDeadlineValidationErrorText('')
+  }
+
+  const submitTask = () => {
+    const isNotAbleToSubmit = validate()
+    // dbにデータを飛ばす
+    if (isNotAbleToSubmit) {
+      return
+    }
+    handleClose()
+  }
+
+  useEffect(() => {
+    resetErrorText()
+  }, [props.isVisible])
+
   return (
     <StyledModal show={props.isVisible} onHide={handleClose}>
       <StyledModal.Header closeButton>
@@ -85,16 +168,21 @@ export default function TaskEditor(props: Props) {
           onChange={onChangeTaskName}
           value={taskName}
         />
+        <ErrorText isVisible={isTaskValidationErrorVisible} errorText={taskValidationErrorText} />
         <OptionSpacer>オプション設定</OptionSpacer>
         <InputOptions formLabel='優先度' options={options} onChange={onChangeTaskPriority} />
         <InputDate onChangeDate={onChangeDate} />
         <InputTime onChangeTime={onChangeTime} />
+        <ErrorText
+          isVisible={isDeadlineValidationErrorVisible}
+          errorText={deadlineValidationErrorText}
+        />
       </StyledModal.Body>
       <StyledModal.Footer>
         <Button variant='secondary' onClick={handleClose}>
           キャンセル
         </Button>
-        <Button variant='primary' onClick={handleClose}>
+        <Button variant='primary' onClick={submitTask}>
           タスク作成
         </Button>
       </StyledModal.Footer>
