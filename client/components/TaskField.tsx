@@ -9,7 +9,7 @@ import { Group, TaskType } from '../values/task'
 
 const Field = styled.div`
   width: 100%;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 60px);
   background-color: #cdffff;
   color: #000000;
   padding: 15px;
